@@ -5,6 +5,9 @@ from setuptools import setup, find_packages
 
 here = path.abspath(path.dirname(__file__))
 
+with open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+    long_description = f.read()
+
 with open(os.path.join(here, 'requirements.txt')) as f:
   install_reqs = [
     s for s in [
@@ -14,7 +17,7 @@ with open(os.path.join(here, 'requirements.txt')) as f:
 
 setup(
     name='sanskrit_tagger',
-    version='0.1.6',
+    version='0.1.7',
     include_package_data=True,
     package_data={
         'sanskrit_tagger': ['data/*.dat'],
@@ -48,7 +51,8 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 3'
+        'Programming Language :: Python :: 3',
+        'Operating System :: OS Independent',
     ],
 
     keywords='sanskrit samskritam pos tagger pos-tagger nlp',
@@ -76,4 +80,7 @@ setup(
         # 'dev': ['check-manifest'],
         'test': ['pytest']
     },
+
+    long_description=long_description,
+    long_description_content_type="text/markdown",
 )
