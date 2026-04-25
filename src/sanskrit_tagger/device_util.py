@@ -3,10 +3,8 @@ import torch
 def get_device(device=None):
     if device is None:
         if torch.cuda.is_available():
-            torch.cuda.set_per_process_memory_fraction(0.4, 0)
             return torch.device("cuda")
         elif torch.backends.mps.is_available():
-            torch.mps.set_per_process_memory_fraction(0.4)
             return torch.device("mps")
         else:
             return torch.device("cpu")
