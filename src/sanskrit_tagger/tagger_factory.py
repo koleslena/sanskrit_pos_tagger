@@ -7,7 +7,10 @@ from sanskrit_tagger.pos_tagger import POSTagger
 _data_path = 'data'
 _this_dir, _ = os.path.split(__file__)
 
-def get_pos_tagger(model, vocab_size, labels_num, **kwargs):
+def get_pos_tagger(model, **kwargs):
+    p_list = [p.shape for p in model.parameters()]
+    vocab_size, labels_num = p_list[0][0], p_list[-1][0]
+    
     with open(join(_this_dir, _data_path, f'char2id_{vocab_size}_{labels_num}.dat'), 'rb') as file:
         loaded_dict = pickle.load(file)
 

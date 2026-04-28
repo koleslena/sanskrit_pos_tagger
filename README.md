@@ -29,18 +29,13 @@ model = torch.hub.load('koleslena/sanskrit_nlp_models', 'cnn_full_pos_tagger_mod
 
 # загрузка BiLSTM модели (более точная на длинных контекстах)
 model = torch.hub.load('koleslena/sanskrit_nlp_models', 'bilstm_full_pos_tagger_model')
-
-# Извлекаем размерности словарей прямо из параметров модели
-p_list = [p.shape for p in model.parameters()]
-chars_dim, tags_dim = p_list[0][0], p_list[-1][0]
-
 ```
 
 ```python
 from sanskrit_tagger.tagger_factory import get_pos_tagger
 
 # Создание теггера с имеющимися параметрами (модель и словари символов/тегов)
-pos_tagger = get_pos_tagger(model, chars_dim, tags_dim, max_sent_len=1000)
+pos_tagger = get_pos_tagger(model)
 
 # Текст должен быть разбит на слова
 sentences = [

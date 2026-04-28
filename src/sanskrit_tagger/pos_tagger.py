@@ -8,19 +8,19 @@ from torch.utils.data import DataLoader
 from sanskrit_tagger.device_util import get_device, copy_data_to_device
 
 class POSTagger:
-    def __init__(self, model, char2id, id2label, max_sent_len=700, max_token_len=30, device=None, batch_size=64):
+    def __init__(self, model, char2id, id2label, device=None, batch_size=64):
         self.model = model
         self.char2id = char2id
         self.id2label = id2label
-        self.max_sent_len = max_sent_len
-        self.max_token_len = max_token_len
         self.device = device
         self.batch_size = batch_size
 
     def __call__(self, sentences):
+        max_sent_len = max(len(sent) for sent in sentences)
         tokenized_corpus = [sent.split() for sent in sentences]
+        max_token_len = max(len(t) for t in [token for tokens in tokenized_corpus for token in tokens])
 
-        inputs = torch.zeros((len(sentences), self.max_sent_len, self.max_token_len + 2), dtype=torch.long)
+        inputs = torch.zeros((len(sentences), max_sent_len, max_token_len + 2), dtype=torch.long)
 
         for sent_i, sentence in enumerate(tokenized_corpus):
             for token_i, token in enumerate(sentence):
