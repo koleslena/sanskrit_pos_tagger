@@ -17,7 +17,7 @@ with open(os.path.join(here, 'requirements.txt')) as f:
 
 setup(
     name='sanskrit_tagger',
-    version='0.2.0',
+    version='0.2.1',
     include_package_data=True,
     package_data={
         'sanskrit_tagger': ['data/*.dat'],
