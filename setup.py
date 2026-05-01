@@ -17,10 +17,10 @@ with open(os.path.join(here, 'requirements.txt')) as f:
 
 setup(
     name='sanskrit_tagger',
-    version='0.2.1',
+    version='0.2.8',
     include_package_data=True,
     package_data={
-        'sanskrit_tagger': ['data/*.dat'],
+        'sanskrit_tagger': ['data/*.dat', 'data/*.json'],
     },
 
     description='Pos tagger tools to use with pas taggers models',

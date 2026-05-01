@@ -6,6 +6,7 @@ from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
 
 from sanskrit_tagger.device_util import get_device, copy_data_to_device
+from sanskrit_tagger.transliteration import normalize_to_slp1
 
 class POSTagger:
     def __init__(self, model, char2id, id2label, device=None, batch_size=64):
@@ -16,6 +17,11 @@ class POSTagger:
         self.batch_size = batch_size
 
     def __call__(self, sentences):
+        if isinstance(sentences, str):
+            sentences = list(sentences)
+        
+        sentences = [normalize_to_slp1(sent) for sent in sentences]
+        
         max_sent_len = max(len(sent) for sent in sentences)
         tokenized_corpus = [sent.split() for sent in sentences]
         max_token_len = max(len(t) for t in [token for tokens in tokenized_corpus for token in tokens])
