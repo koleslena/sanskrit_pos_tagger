@@ -1,5 +1,6 @@
 import pytest
-from transliteration import normalize_to_slp1, slp_to_deva, slp_to_iast
+from sanskrit_tagger.transliteration import normalize_to_slp1, slp_to_deva, slp_to_iast
+
 
 
 @pytest.mark.parametrize("input_text, expected_slp1", [
@@ -14,6 +15,7 @@ from transliteration import normalize_to_slp1, slp_to_deva, slp_to_iast
     ("devābhyām", "devAByAm"),
     ("ṛṣi", "fzi"),
     ("kṛṣṇa", "kfzRa"),
+    ("laṅghanaṁ kiṁsvillaṅghanīyāśca", "laNGanaM kiMsvillaNGanIyASca"),
     
     # --- Harvard-Kyoto (HK) ---
     ("bhavati", "Bavati"),  # bh -> B

@@ -19,7 +19,7 @@ def schema(text):
     
     # Если есть f, x, w, q или F, X, Y, O, E, W, Q — это точно SLP1, возвращаем как есть
     if any(m in text for m in "fFxXYOEwWqQ") or any(m in text for m in slp1_markers):
-        return text 
+        return sanscript.SLP1 
 
     hk_markers = ["kh", "gh", "ch", "jh", "th", "dh", "Th", "Dh", "ph", "bh", "au", "ai", "J", "RR"]
 
@@ -27,7 +27,7 @@ def schema(text):
     if any('\u0900' <= char <= '\u097F' for char in text):
         return sanscript.DEVANAGARI
     # Если есть диакритика (ā, ī, ū, ṃ, ḥ, ṭ, ḍ, ṇ, ś, ṣ) — скорее всего IAST
-    elif any(char in "āīūṃḥṭḍṇśṣ" for char in text.lower()):
+    elif any(char in "āīūṃḥṭḍṇśṣṁ" for char in text.lower()):
         return sanscript.IAST
     # Если есть характерные придыхания 'h' — скорее всего это HK
     elif any(m in text for m in hk_markers):
@@ -45,7 +45,11 @@ def normalize_to_slp1(text: str) -> str:
         return ""
     
     text = text.strip()
+    text = text.replace("ṁ", "ṃ")
 
     source_scheme = schema(text)
+
+    if source_scheme == sanscript.SLP1:
+        return text
     
     return transliterate(text, source_scheme, sanscript.SLP1)
