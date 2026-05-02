@@ -14,7 +14,7 @@ class Segmenter:
     def __call__(self, sentences):
 
         if isinstance(sentences, str):
-            sentences = list(sentences)
+            sentences = [sentences]
         
         sentences = [normalize_to_slp1(sent) for sent in sentences]
 
