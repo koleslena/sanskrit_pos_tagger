@@ -1,5 +1,7 @@
 import re
 
+MIN_WORDS = 4
+
 def preprocess_sanskrit_text(text):
     if not text:
         return []
@@ -21,27 +23,27 @@ def preprocess_sanskrit_text(text):
         if not words:
             continue
             
-        # Если в строке 5 или меньше слов, оставляем как есть
-        if len(words) <= 5:
+        # Если в строке MIN_WORDS или меньше слов, оставляем как есть
+        if len(words) <= MIN_WORDS:
             final_lines.append(" ".join(words))
             continue
             
-        # 3. Если слов больше 5, запускаем алгоритм умной нарезки
+        # 3. Если слов больше MIN_WORDS, запускаем алгоритм умной нарезки
         i = 0
         total_words = len(words)
         
         while i < total_words:
             remaining_words = total_words - i
             
-            # Если осталось от 6 до 7 слов, забираем их целиком в одну строку,
+            # Если осталось от MIN_WORDS + 1 до MIN_WORDS + 2 слов, забираем их целиком в одну строку,
             # чтобы на следующем шаге не остался хвост из 1 или 2 слов.
-            if 6 <= remaining_words <= 7:
+            if MIN_WORDS + 1 <= remaining_words <= MIN_WORDS + 2:
                 chunk = words[i : i + remaining_words]
                 final_lines.append(" ".join(chunk))
                 break
                 
-            # Стандартный шаг: берем максимум 5 слов
-            chunk_size = min(5, remaining_words)
+            # Стандартный шаг: берем максимум MIN_WORDS слов
+            chunk_size = min(MIN_WORDS, remaining_words)
             chunk = words[i : i + chunk_size]
             final_lines.append(" ".join(chunk))
             

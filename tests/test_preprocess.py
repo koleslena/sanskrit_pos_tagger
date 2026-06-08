@@ -1,6 +1,6 @@
 import pytest
 # Предполагается, что функция находится в файле sanskrit_util.py
-from sanskrit_tagger.preprocess import preprocess_sanskrit_text
+from sanskrit_tagger.preprocess import MIN_WORDS, preprocess_sanskrit_text
 
 
 def test_empty_and_none_input():
@@ -15,8 +15,6 @@ def test_punctuation_and_danda_removal():
     text = "धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः । मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय ॥"
     result = preprocess_sanskrit_text(text)
 
-    # Должна получиться одна строка, так как слов всего 8, но после удаления
-    # знаков пунктуации сработает разбиение (8 слов -> 5 + 3)
     assert len(result) == 2
 
     # Проверяем, что в тексте не осталось вертикальных черт и знаков препинания
@@ -30,21 +28,21 @@ def test_punctuation_and_danda_removal():
 
 @pytest.mark.parametrize("word_count, expected_chunks", [
     (3, [3]),
-    (5, [5]),
-    (6, [6]),
-    (7, [7]),
-    (8, [5, 3]),
-    (9, [5, 4]),
-    (10, [5, 5]),
-    (11, [5, 6]),
-    (12, [5, 7]),
-    (13, [5, 5, 3])
+    (MIN_WORDS, [MIN_WORDS]),
+    (MIN_WORDS + 1, [MIN_WORDS + 1]),  # 6 слов -> граница: одна строка
+    (MIN_WORDS + 2, [MIN_WORDS + 2]),  # 7 слов -> граница: одна строка
+    (MIN_WORDS + 3, [MIN_WORDS, 3]),  # 8 слов -> MIN_WORDS + остаток 3
+    (MIN_WORDS + 4, [MIN_WORDS, 4]),  # 9 слов -> MIN_WORDS + остаток 4
+    (MIN_WORDS * 2, [MIN_WORDS, MIN_WORDS]),  # 10 слов -> два ровных куска
+    (MIN_WORDS * 2 + 1, [MIN_WORDS, MIN_WORDS + 1]),  # 11 слов -> MIN_WORDS + 6, чтобы не было хвоста в 1 слово
+    (MIN_WORDS * 2 + 2, [MIN_WORDS, MIN_WORDS + 2]),  # 12 слов -> MIN_WORDS + 7, чтобы не было хвоста в 2 слова
+    (MIN_WORDS * 2 + 3, [MIN_WORDS, MIN_WORDS, 3]),  # 13 слов -> MIN_WORDS + MIN_WORDS + остаток 3
 ])
 def test_smart_word_splitting_boundaries(word_count, expected_chunks):
-    """Тест без фикстуры subtests. 
-    Каждое граничное условие проверяется изолированно.
+    """Тест проверяет логику скользящего окна нарезки строк.
+        Значения динамически привязаны к константе MIN_WORDS.
     """
-    # Генерируем строку с точным количеством слов
+    # Генерируем тестовую строку с точным количеством слов
     words_list = [f"word{i}" for i in range(1, word_count + 1)]
     input_text = " ".join(words_list)
     
