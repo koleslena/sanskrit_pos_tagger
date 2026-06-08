@@ -1,6 +1,7 @@
 import torch
 
 from sanskrit_tagger.device_util import get_device
+from sanskrit_tagger.preprocess import preprocess_sanskrit_text
 from sanskrit_tagger.transliteration import normalize_result, normalize_to_slp1
 
 class Segmenter:
@@ -19,7 +20,9 @@ class Segmenter:
         return_top: сколько лучших вариантов возвращать (1 или больше)
         """
         if isinstance(sentences, str):
-            sentences = [sentences]
+            sentences = preprocess_sanskrit_text(sentences)
+        else:
+            sentences = [line for sent in sentences for line in preprocess_sanskrit_text(sent)]
         
         sentences = [normalize_to_slp1(sent) for sent in sentences]
 
