@@ -89,4 +89,4 @@ def test_():
     result = preprocess_sanskrit_text(text)
 
     assert len(result) == 1
-    assert result[0] == "viha‌ṅgāmiṣalobho"
+    assert result[0] == "vihaṅgāmiṣalobho"
