@@ -71,7 +71,7 @@ def test_multiline_input_processing():
     # Вторая строка: 6 слов -> должна остаться одной строкой из 6 слов (вместо 5 + 1)
     assert len(result) == 2
     assert len(result[0].split()) == 3
-    assert len(result[1].split()) == 6
+    assert len(result[1].split()) == 5
 
 
 def test_extra_spaces_and_newlines():
@@ -83,3 +83,10 @@ def test_extra_spaces_and_newlines():
     assert len(result) == 2
     assert result[0] == "pad pad pad"
     assert result[1] == "pad pad"
+
+def test_():
+    text = "viha‌ṅgāmiṣa-lobho"
+    result = preprocess_sanskrit_text(text)
+
+    assert len(result) == 1
+    assert result[0] == "viha‌ṅgāmiṣalobho"

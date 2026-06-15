@@ -80,7 +80,7 @@ class Segmenter:
             last_hidden = encoder_outputs[:, last_idx, :].unsqueeze(0).contiguous()
 
             hidden_states = []
-            for _ in range(self.model.n_layers):
+            for _ in range(self.model.n_layers_dec):
                 h = last_hidden.clone()
                 # Создаем тензор для cell state (c) того же типа на нужном устройстве
                 c = torch.zeros(1, 1, self.model.hidden_dim, device=self.device, dtype=last_hidden.dtype)
@@ -89,6 +89,8 @@ class Segmenter:
             # Начинаем с <SOS> (индекс 59)
             current_char_idx = self.SOS 
             result = []
+
+            encoder_projected = self.model.decoder.attention.U(encoder_outputs)
             
             for _ in range(max_len):
                 input_tensor = torch.LongTensor([[current_char_idx]]).to(self.device)
@@ -99,7 +101,8 @@ class Segmenter:
                     hidden_states, 
                     encoder_outputs, 
                     src_tensor,
-                    src_mask
+                    src_mask,
+                    encoder_projected=encoder_projected
                 )
                 
                 # Выбираем самый вероятный символ
