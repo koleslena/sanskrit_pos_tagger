@@ -17,7 +17,7 @@ with open(os.path.join(here, 'requirements.txt')) as f:
 
 setup(
     name='sanskrit_tagger',
-    version='0.3.6',
+    version='0.3.7',
 
     description='Pos tagger tools to use with pas taggers models',
 

@@ -135,7 +135,7 @@ class Segmenter:
             last_idx = lengths[0] - 1
             last_hidden = encoder_outputs[:, last_idx, :].unsqueeze(0).contiguous()
             initial_hidden = [(last_hidden.clone(), torch.zeros(1, 1, self.model.hidden_dim, device=self.device)) 
-                              for _ in range(self.model.n_layers)]
+                              for _ in range(self.model.n_layers_dec)]
 
             # Гипотезы: (score, sequence_ids, hidden_states)
             hypotheses = [(0.0, [self.SOS], initial_hidden)]
