@@ -16,6 +16,7 @@ from sanskrit_tagger.transliteration import normalize_to_slp1, slp_to_deva, slp_
     ("ṛṣi", "fzi"),
     ("kṛṣṇa", "kfzRa"),
     ("laṅghanaṁ kiṁsvillaṅghanīyāśca", "laNGanaM kiMsvillaNGanIyASca"),
+    ("agnim saṅgṛhya jalam pibati", "agnim saNgfhya jalam pibati"),
     
     # --- Harvard-Kyoto (HK) ---
     ("bhavati", "Bavati"),  # bh -> B
@@ -45,6 +46,9 @@ def test_slp1_specific_markers():
     # f = ṛ, F = ṝ
     assert normalize_to_slp1("fzi") == "fzi"
     assert normalize_to_slp1("pitFn") == "pitFn" # pitṝn
+    assert normalize_to_slp1("ṛṣi") == "fzi"
+    assert normalize_to_slp1("ṛtu") == "ftu"
+    assert normalize_to_slp1("pitṝn") == "pitFn" # pitṝn
 
 def test_slp_to_deva():
     assert " ".join([slp_to_deva(ans) for ans in ["he katamat,he katamad", "he katame", "he katamAni"]]) == "हे कतमत्,हे कतमद् हे कतमे हे कतमानि"

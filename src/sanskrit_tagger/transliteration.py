@@ -26,8 +26,8 @@ def schema(text):
     # Пытаемся определить: если есть символы деванагари
     if any('\u0900' <= char <= '\u097F' for char in text):
         return sanscript.DEVANAGARI
-    # Если есть диакритика (ā, ī, ū, ṃ, ḥ, ṭ, ḍ, ṇ, ś, ṣ) — скорее всего IAST
-    elif any(char in "āīūṃḥṭḍṇśṣṁ" for char in text.lower()):
+    # Если есть диакритика (ā, ī, ū, ṃ, ḥ, ṭ, ḍ, ṇ, ś, ṣ, ṅ, ṛ, ñ, ṝ) — скорее всего IAST
+    elif any(char in "āīūṃḥṭḍṇśṣṁṅṛñṝ" for char in text.lower()):
         return sanscript.IAST
     # Если есть характерные придыхания 'h' — скорее всего это HK
     elif any(m in text for m in hk_markers):
@@ -48,6 +48,7 @@ def normalize_to_slp1(text: str) -> str:
     text = text.replace("ṁ", "ṃ")
 
     source_scheme = schema(text)
+    print(source_scheme)
 
     if source_scheme == sanscript.SLP1:
         return text

@@ -84,9 +84,17 @@ def test_extra_spaces_and_newlines():
     assert result[0] == "pad pad pad"
     assert result[1] == "pad pad"
 
-def test_():
+def test_junk_litera():
     text = "viha‌ṅgāmiṣa-lobho"
     result = preprocess_sanskrit_text(text)
 
     assert len(result) == 1
     assert result[0] == "vihaṅgāmiṣalobho"
+
+def test_junk_litera2():
+    text = "agnim saṅ‌gṛhya jalam pibati"
+    result = preprocess_sanskrit_text(text)
+
+    assert len(result) == 1
+    assert result[0] == "agnim saṅgṛhya jalam pibati"
+    
