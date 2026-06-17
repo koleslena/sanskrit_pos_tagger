@@ -2,7 +2,7 @@ import re
 
 MIN_WORDS = 4
 
-def preprocess_sanskrit_text(text):
+def clean_text(text):
     if not text:
         return []
 
@@ -17,7 +17,14 @@ def preprocess_sanskrit_text(text):
     # Сохраняем буквы всех алфавитов (включая диакритику IAST и Деванагари)
     # Убираем: |, ||, |, ‖, ., ,, !, ?, ;, :, \, /, *, etc.
     cleaned_text = re.sub(r'[\d\|\|।॥\.,!\?;\::\"\(\)\[\]\{\}«»„“"”]', ' ', text)
-    
+
+    return cleaned_text
+
+
+def preprocess_sanskrit_text(text):
+
+    cleaned_text = clean_text(text)
+        
     # 2. Разбиваем текст на первичные строки по символам переноса строки
     raw_lines = cleaned_text.splitlines()
     

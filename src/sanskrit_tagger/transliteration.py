@@ -48,7 +48,6 @@ def normalize_to_slp1(text: str) -> str:
     text = text.replace("ṁ", "ṃ")
 
     source_scheme = schema(text)
-    print(source_scheme)
 
     if source_scheme == sanscript.SLP1:
         return text

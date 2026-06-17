@@ -6,6 +6,7 @@ from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
 
 from sanskrit_tagger.device_util import get_device, copy_data_to_device
+from sanskrit_tagger.preprocess import clean_text
 from sanskrit_tagger.transliteration import normalize_to_slp1
 
 class POSTagger:
@@ -21,7 +22,7 @@ class POSTagger:
             sentences = [sentences]
         
         # 1. Нормализация
-        sentences = [normalize_to_slp1(sent) for sent in sentences]
+        sentences = [normalize_to_slp1(clean_text(sent)) for sent in sentences]
         
         # 2. Токенизация (разбиваем на слова)
         tokenized_corpus = [sent.split() for sent in sentences]
