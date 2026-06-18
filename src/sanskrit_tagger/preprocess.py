@@ -4,7 +4,7 @@ MIN_WORDS = 4
 
 def clean_text(text):
     if not text:
-        return []
+        return ''
 
     text = text.replace('-', '')
     # ШАГ 0: Бесследно удаляем скрытые непечатные символы и zero-width костыли
@@ -18,10 +18,14 @@ def clean_text(text):
     # Убираем: |, ||, |, ‖, ., ,, !, ?, ;, :, \, /, *, etc.
     cleaned_text = re.sub(r'[\d\|\|।॥\.,!\?;\::\"\(\)\[\]\{\}«»„“"”]', ' ', text)
 
+    cleaned_text = cleaned_text.replace('saNgf', 'saMgf').replace('saṅgṛ', 'saṃgṛ')
+
     return cleaned_text
 
 
 def preprocess_sanskrit_text(text):
+    if not text:
+        return []
 
     cleaned_text = clean_text(text)
         

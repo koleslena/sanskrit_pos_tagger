@@ -24,6 +24,7 @@ from sanskrit_tagger.transliteration import normalize_to_slp1, slp_to_deva, slp_
     ("phalam", "Palam"),    # ph -> P
     ("divau", "divO"),    # au -> O
     ("guNa", "guRa"),   # R -> N
+    ("agnim saGgRhya jalam pibati", "agnim saNgfhya jalam pibati"),
     
     # --- SLP1 (Без изменений) ---
     ("gaccati", "gaccati"),

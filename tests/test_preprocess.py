@@ -96,5 +96,5 @@ def test_junk_litera2():
     result = preprocess_sanskrit_text(text)
 
     assert len(result) == 1
-    assert result[0] == "agnim saṅgṛhya jalam pibati"
+    assert result[0] == "agnim saṃgṛhya jalam pibati"
     
