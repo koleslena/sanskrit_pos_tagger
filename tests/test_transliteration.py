@@ -17,6 +17,9 @@ from sanskrit_tagger.transliteration import normalize_to_slp1, slp_to_deva, slp_
     ("kṛṣṇa", "kfzRa"),
     ("laṅghanaṁ kiṁsvillaṅghanīyāśca", "laNGanaM kiMsvillaNGanIyASca"),
     ("agnim saṅgṛhya jalam pibati", "agnim saNgfhya jalam pibati"),
+    ("apacayō", "apacayo"),
+    ("ēvam", "evam"),
+    ("vr̥ddhi", "vfdDi"),
     
     # --- Harvard-Kyoto (HK) ---
     ("bhavati", "Bavati"),  # bh -> B

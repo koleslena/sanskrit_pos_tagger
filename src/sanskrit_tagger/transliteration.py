@@ -45,7 +45,7 @@ def normalize_to_slp1(text: str) -> str:
         return ""
     
     text = text.strip()
-    text = text.replace("ṁ", "ṃ")
+    text = text.replace("ṁ", "ṃ").replace("ē", "e").replace("ō", "o").replace("r̥", "ṛ")
 
     source_scheme = schema(text)
 
